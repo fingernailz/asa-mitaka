@@ -21,6 +21,8 @@ client.initialize();
 
 let arrayOfBadWords = ["fuck"];
 
+let isGenModeOn = false;
+
 function parseThroughBadWords(message) {
     let messageSplit = message.split(" ");
     arrayOfBadWords.forEach(function (element) {
@@ -33,13 +35,22 @@ function parseThroughBadWords(message) {
 let arrayOfChats = new Array();
 
 client.on("message", async (message) => {
+    
     let asding = message.body.split(" ")
-    if (asding.length == 1) {
-        return
-    } 
-    if (asding[0] == ".gen") {
-        asding = asding.slice(1)
-        client.sendMessage(message.from,await asding2.GoodName(asding))
+    
+    if (asding[0] == ".gen" || isGenModeOn) {
+        if (!isGenModeOn && asding.length == 1 && asding[0] == ".gen") {
+            isGenModeOn = true;
+            client.sendMessage(message.from, "Gen mode has started")
+        } else if (isGenModeOn && asding.length == 1 && asding[0] == ".gen") {
+            isGenModeOn = false;
+            client.sendMessage(message.from, "gen mode has stopped")
+        } else if (asding.length > 1){
+            asding = asding.slice(1)
+            message.reply(await asding2.GoodName(asding))
+        } else {
+            message.reply(await asding2.GoodName(asding.slice()))
+        }
     }
 })
 
@@ -67,6 +78,9 @@ client.on('message', async message => {
 // })
 
 client.on('message', async message => {
+    if (isGenModeOn) {
+        return
+    }
     // message.reply(message.body)
     if (message.body[0] == ".") {
         return
@@ -108,7 +122,10 @@ client.on("message", async message => {
         await (await message.getChat()).setMessagesAdminOnly()
     }
     
-    if (message.body == ".gcl") {
+    if (message.body.slice(1).toLowerCase() == "list") {
+        client.sendMessage(message.from, "Working Commands\n" + '\n\`.gen => Gemini AI\`\n\`.mp => Making a Poll\`\n\`.n => name of the chat\`\n\`.dp => delete profile pic\`\n\`.cm => delete messages a\`\n\`.leave => Exit group\`\n\`.mute => mute notifications\`\n\`.sr => reference\`')
+    }
+    else if (message.body == ".gcl") {
         try {
 
             let arrayOfContacts = await (await message.getChat()).getContact();
