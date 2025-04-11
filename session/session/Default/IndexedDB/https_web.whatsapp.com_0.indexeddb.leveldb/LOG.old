@@ -1,15 +1,12 @@
-2025/04/11-20:43:55.275 369c Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/04/11-20:43:55.275 369c Recovering log #244
-2025/04/11-20:43:55.296 369c Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000244.log 
-2025/04/11-20:43:57.381 47e4 Level-0 table #250: started
-2025/04/11-20:43:57.389 47e4 Level-0 table #250: 283394 bytes OK
-2025/04/11-20:43:57.390 47e4 Delete type=0 #244
-2025/04/11-20:43:57.391 47e4 Manual compaction at level-0 from '\x00H\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00I\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/04/11-20:43:58.609 1874 Compacting 1@1 + 2@2 files
-2025/04/11-20:43:58.687 1874 Generated table #251@1: 77457 keys, 2253696 bytes
-2025/04/11-20:43:58.733 1874 Generated table #252@1: 23742 keys, 1750691 bytes
-2025/04/11-20:43:58.733 1874 Compacted 1@1 + 2@2 files => 4004387 bytes
-2025/04/11-20:43:58.734 1874 compacted to: files[ 0 0 2 0 0 0 0 ]
-2025/04/11-20:43:58.734 1874 Delete type=2 #246
-2025/04/11-20:43:58.734 1874 Delete type=2 #247
-2025/04/11-20:43:58.734 1874 Delete type=2 #250
+2025/04/12-00:18:16.681 5428 Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/12-00:18:16.681 5428 Recovering log #319
+2025/04/12-00:18:16.682 5428 Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000319.log 
+2025/04/12-00:18:19.146 2a08 Compacting 1@1 + 2@2 files
+2025/04/12-00:18:19.220 2a08 Generated table #322@1: 85906 keys, 2249239 bytes
+2025/04/12-00:18:19.279 2a08 Generated table #323@1: 29667 keys, 2128692 bytes
+2025/04/12-00:18:19.279 2a08 Compacted 1@1 + 2@2 files => 4377931 bytes
+2025/04/12-00:18:19.280 2a08 compacted to: files[ 0 0 2 0 0 0 0 ]
+2025/04/12-00:18:19.280 2a08 Delete type=2 #316
+2025/04/12-00:18:19.280 2a08 Delete type=2 #317
+2025/04/12-00:18:19.280 2a08 Delete type=2 #320
+2025/04/12-00:18:19.867 2a08 Manual compaction at level-0 from '\x00W\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00X\x00\x00\x00' @ 0 : 0; will stop at (end)

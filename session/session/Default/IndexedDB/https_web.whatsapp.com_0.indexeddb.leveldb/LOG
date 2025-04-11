@@ -1,15 +1,4 @@
-2025/04/11-20:50:07.117 1ff0 Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/04/11-20:50:07.118 1ff0 Recovering log #249
-2025/04/11-20:50:07.130 1ff0 Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000249.log 
-2025/04/11-20:50:09.254 4f84 Level-0 table #255: started
-2025/04/11-20:50:09.261 4f84 Level-0 table #255: 132188 bytes OK
-2025/04/11-20:50:09.262 4f84 Delete type=0 #249
-2025/04/11-20:50:09.263 4f84 Manual compaction at level-0 from '\x00I\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00J\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/04/11-20:50:10.569 4f84 Compacting 1@1 + 2@2 files
-2025/04/11-20:50:10.646 4f84 Generated table #256@1: 78009 keys, 2254655 bytes
-2025/04/11-20:50:10.695 4f84 Generated table #257@1: 23791 keys, 1765495 bytes
-2025/04/11-20:50:10.695 4f84 Compacted 1@1 + 2@2 files => 4020150 bytes
-2025/04/11-20:50:10.696 4f84 compacted to: files[ 0 0 2 0 0 0 0 ]
-2025/04/11-20:50:10.697 4f84 Delete type=2 #251
-2025/04/11-20:50:10.697 4f84 Delete type=2 #252
-2025/04/11-20:50:10.697 4f84 Delete type=2 #255
+2025/04/12-00:19:28.765 4eb8 Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/12-00:19:28.765 4eb8 Recovering log #319
+2025/04/12-00:19:28.787 4eb8 Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000319.log 
+2025/04/12-00:19:35.258 1dd0 Manual compaction at level-0 from '\x00X\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00Y\x00\x00\x00' @ 0 : 0; will stop at (end)

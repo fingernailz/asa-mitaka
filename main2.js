@@ -1,6 +1,7 @@
 const { Client, NoAuth, LocalAuth, Poll, Contact, ChatTypes, Chat, MessageAck, RemoteAuth, MessageMedia} = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const {asd} = require("./hangman/hangman")
+// const {asd} = require("./hangman/hangman
+const asding2 = require('./Src/Commands/Gemini/gemini')
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -29,6 +30,32 @@ function parseThroughBadWords(message) {
         });
 }
 
+let arrayOfChats = new Array();
+
+client.on("message", async (message) => {
+    let asding = message.body.split(" ")
+    if (asding.length == 1) {
+        return
+    } 
+    if (asding[0] == ".gen") {
+        asding = asding.slice(1)
+        client.sendMessage(message.from,await asding2.GoodName(asding))
+    }
+})
+
+client.on("ready", async () => {
+    (await client.getChats()).forEach(element => {
+        arrayOfChats.push(element.id)
+    });
+})
+
+client.on("message", message => {
+    if (message.body == "asd") {
+        client.sendMessage(message.from, arrayOfChats )
+        console.log(arrayOfChats)
+    }
+})
+
 let arrayOfMessages = new Array();
 
 client.on('message', async message => {
@@ -51,7 +78,8 @@ client.on('message', async message => {
     } 
     else if (message.body == "ily") {
         message.react("😘");
-    } // else if (() => {
+    } 
+    // else if (() => {
     //     let messageSplit = message.split(" ");
     // arrayOfBadWords.forEach(function (element) {
     //         if (messageSplit.includes(element)) {
