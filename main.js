@@ -1,5 +1,7 @@
+
 const { Client, NoAuth, LocalAuth, Poll, Contact, ChatTypes, Chat, MessageAck, RemoteAuth} = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const {asd} = require("./hangman/hangman")
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -24,51 +26,33 @@ client.on('message_create', message => {
 	}
 });
 
+client.on('message', async message => { 
+    try {
+
+    let arrayOfContacts = await (await message.getChat()).getContact();
+    message.reply(arrayOfContacts)
+    if (message.body == ".gcl") {
+        let m = new Array();
+        arrayOfContacts.forEach(element => {
+            m.push(element.number)
+        });
+        m.forEach( element => {
+            message.reply(`@${element}`)
+        })
+    } } catch (error) {
+        message.reply("Error");
+    }
+}) 
+
 client.on('message_create', message => {
     if (message.body.toLowerCase() === "hi") {
         message.reply("hi this is sanjay, do you need any help????? if yes I'd love to help you")
     }
 })  
 
-// const chat = new chat(client);
-
-
-// const calling = new Call();
-
-// async => {
-//     calling.reject()
-// }
-
-// client.on('message_create', message => {
-//     if (message.body === ".mp") {
-//         message.reply("poll creating")
-//         client.on('vote_update', (vote) => {
-//             const poll = new Poll({
-//                 pollName : "Should I need to shutup?",
-//                 pollOptions : [
-//                     {
-//                         name : 'yes',
-//                         localId : 0
-//                     }, 
-//                     {
-//                         name : 'no',
-//                         localId : 1
-//                     }
-//                 ]
-//             })
-//         })
-//         message.reply(poll)
-//     } 
-// })
 
 client.on('message', async message => {
-    // if (message.body == ".mp") {        await message.reply(new Poll('Winter or Summer?', ['Winter', 'Summer']));
-
-    //     message.reply("Creating Poll")
-    //     client.sendMessage("This is an independent message")
-    //     // await message.reply(new Poll('Should I need to shut up?', ['Yes', 'No']))
-    // }
-
+    
     if (message.body == '.mp') {
         try {
         const poll = new Poll('should I need to shut up?', ['yes', 'no']);
@@ -90,7 +74,7 @@ client.on('message', message => {
 
 client.on('message', message => {
     if (message.body == "ily") {
-        message.react("😘")
+        message.react("😘");
     }
 })
 
@@ -113,6 +97,19 @@ client.on('message',async message => {
     }
 })
 
+client.on("message", async message => {
+    message.reply(message.from)
+    try {
+     message.reply("HangMan will start with in sometime")
+        // asd(client, message.from)
+       await client.sendMessage(message.from, asd())
+        message.reply("asdasd")
+    
+} catch(error) {
+    console.log('asd asd')
+}
+ })
+
 client.on('message', async message => {
     if (message.body[0] + message.body[1] == ".n" && (await message.getContact()).number == "919581805767") {
         await message.reply(((await message.getChat()).name))
@@ -123,13 +120,7 @@ client.on('message', async message => {
     if (message.body[0] + message.body[1] + message.body[2] == ".dp" && (await message.getContact()).number == "919581805767") {
         (await message.getChat()).deletePicture();
     }
-})
-// client.on('message_create', async message => {
-//     if (message.body == "69") {
-//         if (await )
-//     }
-// })
-
+})  
 
 client.on('message', async message => {
     if (message.body[0] + message.body[1] + message.body[2] == ".cm") {try{
@@ -189,12 +180,11 @@ client.on("message", async message => {
 
 let arrayOfMessages = new Array();
 
-client.on('message' , async message => {
-    if (message.body == ".gd") {
-        return
-    }
+client.on('message', async message => {
+    if (message.body[0] == ".")
     arrayOfMessages.push(message.body)
 })
+
 
 client.on('message', async message => {
     if (message.body = ".mute") {
@@ -223,14 +213,6 @@ client.on('message',async message => {
     }
 })
 
-
-
-// client.on('group_leave', async leave => {
-//    await leave.getChat().lea
-// })
-
-// client.on('disconnected')
-
 client.on("call",async call => {
     console.log(call.from)
     if (call.isVideo) {
@@ -242,3 +224,4 @@ client.on("call",async call => {
         }
 }   
 })
+
