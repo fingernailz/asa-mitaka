@@ -1,15 +1,15 @@
-2025/04/13-01:04:08.542 2f80 Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/04/13-01:04:08.542 2f80 Recovering log #223
-2025/04/13-01:04:08.565 2f80 Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000223.log 
-2025/04/13-01:04:15.185 45b4 Level-0 table #229: started
-2025/04/13-01:04:15.194 45b4 Level-0 table #229: 254995 bytes OK
-2025/04/13-01:04:15.196 45b4 Delete type=0 #223
-2025/04/13-01:04:15.196 45b4 Manual compaction at level-0 from '\x00R\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00S\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/04/13-01:04:16.428 2f80 Compacting 1@1 + 2@2 files
-2025/04/13-01:04:16.497 2f80 Generated table #230@1: 67991 keys, 2232326 bytes
-2025/04/13-01:04:16.530 2f80 Generated table #231@1: 20575 keys, 772071 bytes
-2025/04/13-01:04:16.530 2f80 Compacted 1@1 + 2@2 files => 3004397 bytes
-2025/04/13-01:04:16.531 2f80 compacted to: files[ 0 0 2 0 0 0 0 ]
-2025/04/13-01:04:16.531 2f80 Delete type=2 #225
-2025/04/13-01:04:16.531 2f80 Delete type=2 #226
-2025/04/13-01:04:16.532 2f80 Delete type=2 #229
+2025/04/13-16:43:21.826 1708 Reusing MANIFEST C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/13-16:43:21.826 1708 Recovering log #217
+2025/04/13-16:43:21.839 1708 Reusing old log C:\Users\sanju\OneDrive\Desktop\web\session\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000217.log 
+2025/04/13-16:43:26.719 4084 Manual compaction at level-0 from '\x00P\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00Q\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/04/13-16:44:34.763 2b70 Level-0 table #223: started
+2025/04/13-16:44:34.791 2b70 Level-0 table #223: 1579728 bytes OK
+2025/04/13-16:44:34.793 2b70 Delete type=0 #217
+2025/04/13-16:44:36.652 2b70 Compacting 1@1 + 2@2 files
+2025/04/13-16:44:36.755 2b70 Generated table #224@1: 80176 keys, 2247212 bytes
+2025/04/13-16:44:36.802 2b70 Generated table #225@1: 27629 keys, 1815102 bytes
+2025/04/13-16:44:36.802 2b70 Compacted 1@1 + 2@2 files => 4062314 bytes
+2025/04/13-16:44:36.803 2b70 compacted to: files[ 0 0 2 0 0 0 0 ]
+2025/04/13-16:44:36.803 2b70 Delete type=2 #219
+2025/04/13-16:44:36.803 2b70 Delete type=2 #220
+2025/04/13-16:44:36.803 2b70 Delete type=2 #223

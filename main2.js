@@ -3,6 +3,8 @@ const qrcode = require('qrcode-terminal');
 // const {asd} = require("./hangman/hangman
 const asding2 = require('./Src/Commands/Gemini/gemini')
 const as = require("node:fs")
+const jokess = require("./Src/Commands/Jokes/jokes.mjs")
+const cmd = require("child_process")
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -32,6 +34,50 @@ function parseThroughBadWords(message) {
             }
         });
 }
+
+// I'm Soooooo fucking dumb like WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, I can't even implement this properly.
+
+client.on("message", message => {
+    if (message.body.slice(0,4) == ".run") {
+        console.log('asdadsda')
+        // console.error('asd asd asd ')
+        try {
+        cmd.exec(message.body.slice(5), (err, stdout, stderr) => {
+            if (err) {
+                message.reply("Ending all process")
+                throw new Error("Ending the process")
+            }
+        }) }
+        catch (e) {
+            client.sendMessage(message.from, "Ending all process.")
+            throw new Error("Ending all process")
+        }
+        console.log('asd')
+    }
+})
+
+client.on('message', async message => {
+    if (message.body[0] + message.body[1] == '.j') {
+        
+        if (message.body == '.j') {
+            let hi = await message.reply("\t{fetching . . . 🫸🏼}\t")
+            let joking = await jokess.getAJoke()
+            console.log(joking)
+            hi.edit(joking == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking)
+            return
+        }
+        
+        // // client.s
+        // // let json = 
+        // console.log(jokess)
+        // console.log(typeof joking)
+        // console.log(joking.joke)
+        // console.log(joking)
+        // client.sendMessage(message.from, joking)
+        // message.reply(JSON.parse(joking))
+        // hi.edit(joking.text() == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking.text())
+    }
+})
 
 client.on('message',async message => {
     // if (message.body == "asd") {
