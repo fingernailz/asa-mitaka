@@ -2,6 +2,7 @@ const { Client, NoAuth, LocalAuth, Poll, Contact, ChatTypes, Chat, MessageAck, R
 const qrcode = require('qrcode-terminal');
 // const {asd} = require("./hangman/hangman
 const asding2 = require('./Src/Commands/Gemini/gemini')
+const as = require("node:fs")
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -32,6 +33,21 @@ function parseThroughBadWords(message) {
         });
 }
 
+client.on('message',async message => {
+    // if (message.body == "asd") {
+    //     // message.reply("ashut")
+    //     // message.hasQuotedMsg
+      
+    // }
+    // if (message.hasMedia) {
+    //     let mdia = await message.downloadMedia()
+    //     // const image = mdia.data
+    //     let decodeData =  Buffer.from(mdia.data, "base64");
+        
+    //     as.writeFileSync(mdia.filename + mdia.mimetype, decodeData);
+    // }
+})
+
 let arrayOfChats = new Array();
 
 client.on("message", async (message) => {
@@ -39,6 +55,7 @@ client.on("message", async (message) => {
     let asding = message.body.split(" ")
     
     if (asding[0] == ".gen" || isGenModeOn) {
+        
         if (!isGenModeOn && asding.length == 1 && asding[0] == ".gen") {
             isGenModeOn = true;
             client.sendMessage(message.from, "Gen mode has started")
@@ -47,9 +64,23 @@ client.on("message", async (message) => {
             client.sendMessage(message.from, "gen mode has stopped")
         } else if (asding.length > 1){
             asding = asding.slice(1)
-            message.reply(await asding2.GoodName(asding))
+            if (message.hasMedia) {
+                let asd = await message.downloadMedia()
+                await asding2.imgReplier(asd, message.body)
+                return
+            }
+            let reply = await message.reply("Generating Reply ....")
+            await reply.edit(await asding2.GoodName(asding))
+            // await message.edit(await message.body.replace(message.body, "asdada"))
         } else {
-            message.reply(await asding2.GoodName(asding.slice()))
+            if (message.hasMedia) {
+                let asd = await message.downloadMedia()
+                await asding2.imgReplier(asd, message.body)
+                return
+            }
+            let reply = await message.reply("Generating Reply ....")
+            await reply.edit(await asding2.GoodName(asding.slice()))
+            // await message.edit(await message.body.replace(message.body, await asding2.GoodName(asding.slice())))
         }
     }
 })
@@ -143,7 +174,7 @@ client.on("message", async message => {
             }
     } else if (message.body[1] + message.body[2] + message.body[3] == "cdp") {try {
 
-        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(MessageMedia.fromUrl("https://static.wikia.nocookie.net/chainsaw-man/images/5/54/Makima_Reze_Arc_anime_design.png"))) : client.sendMessage(message.from, "not working");
+        // ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(MessageMedia.fromUrl("https://static.wikia.nocookie.net/chainsaw-man/images/5/54/Makima_Reze_Arc_anime_design.png"))) : client.sendMessage(message.from, "not working");
     }   catch(error) {
 
     }   }
@@ -183,16 +214,24 @@ client.on("message", async message => {
     console.log('asd asd')
 } } else if (message.body[1] == "n" && (await message.getContact()).number == "919581805767") {
     await message.reply(((await message.getChat()).name))
-} else if (message.body[1] + message.body[2] == "dp" && (await message.getContact()).number == "919581805767") {
+} else if (message.body[1] + message.body[2] == "dp" && (await message.getContact()).number == "919581805767") { try {
     (await message.getChat()).deletePicture();
+} catch (error) {
+    client.sendMessage(message.from, "llmaoo")
+}
 } else if (message.body[1] + message.body[2] == "cm") {try{
+    let message2 = message.from;
+    // if (!(await message.getChat()).isGroup) {
+    //     return
+    // }
     (await message.getChat()).clearMessages();
-    message.reply("🫡 All the messages have been cleared from my account")
-    return
+    client.sendMessage(message2, "🫡 All the messages have been cleared from my account")
+    // return
     // message.reply((await message.getContact()).getChat());
 }
 catch (error) {
-    message.reply("asd asd fr fr ")
+    // message.reply("asd asd fr fr ")
+    client.sendMessage(message.from, "Error while clearing messages from client, unable to clear contact 9581805767 for manual clearing")
 }} else if (message.body === ".leave") {
     // (await message.getChat()).isGroup.leave()
     let a = await message.getChat()
