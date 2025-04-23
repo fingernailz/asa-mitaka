@@ -2,11 +2,12 @@
     "dependencies": {
         "@google/generative-ai": "^0.24.0",
         "axios": "^1.8.4",
+        "fabric": "^6.6.4",
         "grok-js": "^3.3.1",
         "node-fetch": "^3.3.2",
         "qrcode-terminal": "^0.12.0",
         "spotify-api.js": "^9.2.5",
         "tsc": "^2.0.4",
         "whatsapp-web.js": "^1.27.0"
-    }        }
-
+    }
+}

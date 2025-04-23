@@ -4,7 +4,9 @@ const qrcode = require('qrcode-terminal');
 const asding2 = require('./Src/Commands/Gemini/gemini')
 const as = require("node:fs")
 const jokess = require("./Src/Commands/Jokes/jokes.mjs")
-const cmd = require("child_process")
+const cmd = require("child_process");
+const { default: fetch } = require('node-fetch');
+const { deprecate } = require('node:util');
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -22,39 +24,88 @@ client.on('qr', qr => {
 
 client.initialize();
 
-let arrayOfBadWords = ["fuck"];
+let arrayOfBadWords = [
+    "darn",
+    "heck",
+    "idiot",
+    "stupid",
+    "douche",
+    "crap",
+    "jerk",
+    "moron",
+    "fuck"
+]
+;
 
 let isGenModeOn = false;
 
 function parseThroughBadWords(message) {
-    let messageSplit = message.split(" ");
-    arrayOfBadWords.forEach(function (element) {
-            if (messageSplit.includes(element)) {
-                return true;
-            }
-        });
+    var messageSplit = message.split(" ").length == 1 ? message : message.split(" ");
+    // console.log(messageSplit)
+    // arrayOfBadWords.forEach(function (element) {
+    //         if (messageSplitincludes(element)) {
+    //             return true;
+    //         }
+    // });
+    for(let i = 0; i < arrayOfBadWords.length; i++) {
+        if (messageSplit.includes(arrayOfBadWords[i])) {
+            return true;
+        }
+    }
 }
+
+// && (await message.getContact()).number == "919581805767"
+//fix this 
+// client.on("message", async (message) => {
+//     // console.log(message.body)
+//     // new MessageAck
+//     // console.log(message)
+//     let tempMessage = message
+//     if (message.body[0] + message.body[1] + message.body[2] == ".ss" && (await tempMessage.getContact()).number == "919581805767") {
+//         // try {
+//         // console.log(message)
+//         console.log(typeof message)
+//         let mess = message.body.slice(4)
+//         await client.setStatus(mess)
+//         client.sendMessage(message.from, `Status successfully changed to \"${mess}\"` )
+//         // await client.
+//         // } catch(err) {
+//             // console.log("asd asd error")
+//         // }
+//     }
+// })
+//anon func
+
+// () => {
+//     let messageSplit = message.split(" ");
+// arrayOfBadWords.forEach(function (element) {
+//         if (messageSplit.includes(element)) {
+//             return true;
+//         }
+//     });
+// }
+
 
 // I'm Soooooo fucking dumb like WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, I can't even implement this properly.
 
-client.on("message", message => {
-    if (message.body.slice(0,4) == ".run") {
-        console.log('asdadsda')
-        // console.error('asd asd asd ')
-        try {
-        cmd.exec(message.body.slice(5), (err, stdout, stderr) => {
-            if (err) {
-                message.reply("Ending all process")
-                throw new Error("Ending the process")
-            }
-        }) }
-        catch (e) {
-            client.sendMessage(message.from, "Ending all process.")
-            throw new Error("Ending all process")
-        }
-        console.log('asd')
-    }
-})
+// client.on("message", message => {
+//     if (message.body.slice(0,4) == ".run") {
+//         console.log('asdadsda')
+//         // console.error('asd asd asd ')
+//         try {
+//         cmd.exec(message.body.slice(5), (err, stdout, stderr) => {
+//             if (err) {
+//                 message.reply("Ending all process")
+//                 throw new Error("Ending the process")
+//             }
+//         }) }
+//         catch (e) {
+//             client.sendMessage(message.from, "Ending all process.")
+//             throw new Error("Ending all process")
+//         }
+//         console.log('asd')
+//     }
+// })
 
 client.on('message', async message => {
     if (message.body[0] + message.body[1] == '.j') {
@@ -79,20 +130,20 @@ client.on('message', async message => {
     }
 })
 
-client.on('message',async message => {
-    // if (message.body == "asd") {
-    //     // message.reply("ashut")
-    //     // message.hasQuotedMsg
+// client.on('message',async message => {
+//     // if (message.body == "asd") {
+//     //     // message.reply("ashut")
+//     //     // message.hasQuotedMsg
       
-    // }
-    // if (message.hasMedia) {
-    //     let mdia = await message.downloadMedia()
-    //     // const image = mdia.data
-    //     let decodeData =  Buffer.from(mdia.data, "base64");
+//     // }
+//     // if (message.hasMedia) {
+//     //     let mdia = await message.downloadMedia()
+//     //     // const image = mdia.data
+//     //     let decodeData =  Buffer.from(mdia.data, "base64");
         
-    //     as.writeFileSync(mdia.filename + mdia.mimetype, decodeData);
-    // }
-})
+//     //     as.writeFileSync(mdia.filename + mdia.mimetype, decodeData);
+//     // }
+// })
 
 let arrayOfChats = new Array();
 
@@ -131,10 +182,14 @@ client.on("message", async (message) => {
     }
 })
 
-client.on("ready", async () => {
-    (await client.getChats()).forEach(element => {
-        arrayOfChats.push(element.id)
-    });
+// client.on("ready", async () => {
+//     (await client.getChats()).forEach(element => {
+//         arrayOfChats.push(element.id)
+//     });
+// })
+
+client.on("message",() => {
+    console.log("asd asd d")
 })
 
 client.on("message", message => {
@@ -155,13 +210,16 @@ client.on('message', async message => {
 // })
 
 client.on('message', async message => {
+    
     if (isGenModeOn) {
         return
     }
-    // message.reply(message.body)
     if (message.body[0] == ".") {
         return
     }
+    // message.reply(message.body)
+    try {
+    
     if (message.body === '!ping') {
 		message.reply('pong');
 	} else if (message.body.toLowerCase() === "hi") {
@@ -170,20 +228,20 @@ client.on('message', async message => {
     else if (message.body == "ily") {
         message.react("😘");
     } 
-    // else if (() => {
-    //     let messageSplit = message.split(" ");
-    // arrayOfBadWords.forEach(function (element) {
-    //         if (messageSplit.includes(element)) {
-    //             return true;
-    //         }
-    //     });
-    // }) {
-    //     message.delete(message.getChat())
-    //     // await message.reply("No bad words kanna")
-    //     client.sendMessage(message.from,"No bad words kanna" )
+    
+    
      else if (message.body.toString().toLowerCase() == "good job") {
         message.react("😁")
     }
+    else if (parseThroughBadWords(message.body)) {
+        message.delete(message.getChat())
+        // await message.reply("No bad words kanna")
+        client.sendMessage(message.from,"No bad words kanna" )
+    }
+}
+catch(err) {
+    console.log("Some error I could not find out")
+}
 })
 
 client.on("vote_update", vote => {
@@ -219,8 +277,17 @@ client.on("message", async message => {
                 message.reply("Error");
             }
     } else if (message.body[1] + message.body[2] + message.body[3] == "cdp") {try {
-
-        // ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(MessageMedia.fromUrl("https://static.wikia.nocookie.net/chainsaw-man/images/5/54/Makima_Reze_Arc_anime_design.png"))) : client.sendMessage(message.from, "not working");
+        // let sma;
+        if (message.body.split(" ").length != 1) {
+            async () => { try {
+                await fetch(message.body.split(" ")[2]);
+            } catch (err) {
+                return
+            }
+        }
+        }
+    // "shut up"
+        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(await MessageMedia.fromUrl())) : client.sendMessage(message.from, "not working");
     }   catch(error) {
 
     }   }
@@ -239,7 +306,7 @@ client.on("message", async message => {
         message.reply("https://github.com/pedroslopez/whatsapp-web.js/blob/main/example.js")
     } else  if (message.body[1] == "p") {
         message.pin()
-    } else if (message.body[1] == "u") {        try { 
+    } else if (message.body[1] == "u") { try { 
 
         await message.unpin();
         await message.reply((await (message.getContact())).number);
