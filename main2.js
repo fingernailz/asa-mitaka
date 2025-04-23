@@ -287,20 +287,20 @@ client.on("message", async message => {
         }
         }
     // "shut up"
-        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(await MessageMedia.fromUrl())) : client.sendMessage(message.from, "not working");
+        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(await MessageMedia.fromUrl("https://preview.redd.it/do-you-think-nayuta-will-come-back-v0-nvuh063mr7we1.jpg?width=640&crop=smart&auto=webp&s=d3252dc161ee54c70ef30a8a84e32c5085a58aac"))) : client.sendMessage(message.from, "not working");
     }   catch(error) {
 
     }   }
     
-    else if (message.body.slice(1,3) == 'mp') {
-        try {
-        const poll = new Poll('should I need to shut up?', ['yes', 'no']);
-        await message.reply(poll);
-        } catch (error) {
-            message.reply("Error occured mf")
-        }
-        return
-    } else if (message.body == ".sr") {
+    // else if (message.body.slice(1,3) == 'mp') {
+    //     try {
+    //     const poll = new Poll('should I need to shut up?', ['yes', 'no']);
+    //     await message.reply(poll);
+    //     } catch (error) {
+    //         message.reply("Error occured mf")
+    //     }
+    //     return
+     else if (message.body == ".sr") {
         message.reply("https://docs.wwebjs.dev/")
         message.reply("https://wwebjs.dev/")
         message.reply("https://github.com/pedroslopez/whatsapp-web.js/blob/main/example.js")
@@ -348,14 +348,17 @@ catch (error) {
 }} else if (message.body === ".leave") {
     // (await message.getChat()).isGroup.leave()
     let a = await message.getChat()
-    message.reply(a.isGroup.toString())
+    // message.reply()
     if (a.isGroup) {
         await a.leave();
+    } else {
+        client.sendMessage(message.from, "This is a private chat, the bot cannot leave")
     }
 } else if (message.body[1] + message.body[2] == "mp") {
 let sliced = message.body.split("&")
+console.log(sliced)
 // console.log(sliced)
-if (sliced.length <= 3) {
+if (sliced.length <= 2) {
     message.reply("Invalid number of arguments try again")
     return
 }try {
@@ -402,13 +405,13 @@ client.on("message" , async message => {
 })
 
 client.on("message", async message => {
-    if (message.body === ".DELETE.GROUP.BY.FORCE" && (await message.getContact()).number === "9581805767") {
-        (await message.getChat()).delete();
+    if (message.body == ".DELETE.GROUP.BY.FORCE" && (await message.getContact()).number == "9581805767") {
+        await (await message.getChat()).delete();
     }
 })
 
 client.on("call",async call => {
-    console.log(call.from)
+    // console.log(call.from)
     if (call.isVideo) {
         try {
         await call.reject();
