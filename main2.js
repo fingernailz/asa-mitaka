@@ -1,12 +1,15 @@
 const { Client, NoAuth, LocalAuth, Poll, Contact, ChatTypes, Chat, MessageAck, RemoteAuth, MessageMedia} = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 // const {asd} = require("./hangman/hangman
+const { generateARoast } = require("./Src/Commands/ToasterToRoastHer/roast.mjs")
 const asding2 = require('./Src/Commands/Gemini/gemini')
 const as = require("node:fs")
 const jokess = require("./Src/Commands/Jokes/jokes.mjs")
 const cmd = require("child_process");
 const { default: fetch } = require('node-fetch');
 const { deprecate } = require('node:util');
+const { machine } = require('node:os');
+const { parseThroughBadWords } = require("./Src/functions/basic.mjs")
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -24,6 +27,8 @@ client.on('qr', qr => {
 
 client.initialize();
 
+let contacts = Array();
+
 let arrayOfBadWords = [
     "darn",
     "heck",
@@ -38,21 +43,6 @@ let arrayOfBadWords = [
 ;
 
 let isGenModeOn = false;
-
-function parseThroughBadWords(message) {
-    var messageSplit = message.split(" ").length == 1 ? message : message.split(" ");
-    // console.log(messageSplit)
-    // arrayOfBadWords.forEach(function (element) {
-    //         if (messageSplitincludes(element)) {
-    //             return true;
-    //         }
-    // });
-    for(let i = 0; i < arrayOfBadWords.length; i++) {
-        if (messageSplit.includes(arrayOfBadWords[i])) {
-            return true;
-        }
-    }
-}
 
 // && (await message.getContact()).number == "919581805767"
 //fix this 
@@ -107,26 +97,33 @@ function parseThroughBadWords(message) {
 //     }
 // })
 
+// client.on('message', async message => {
+//     if (message.body[0] + message.body[1] == '.j') {
+        
+//         if (message.body == '.j') {
+//             let hi = await message.reply("\t{fetching . . . 🫸🏼}\t")
+//             let joking = await jokess.getAJoke()
+//             console.log(joking)
+//             hi.edit(joking == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking)
+//             return
+//         }
+        
+//         // // client.s
+//         // // let json = 
+//         // console.log(jokess)
+//         // console.log(typeof joking)
+//         // console.log(joking.joke)
+//         // console.log(joking)
+//         // client.sendMessage(message.from, joking)
+//         // message.reply(JSON.parse(joking))
+//         // hi.edit(joking.text() == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking.text())
+//     }
+// })
+
+
 client.on('message', async message => {
-    if (message.body[0] + message.body[1] == '.j') {
-        
-        if (message.body == '.j') {
-            let hi = await message.reply("\t{fetching . . . 🫸🏼}\t")
-            let joking = await jokess.getAJoke()
-            console.log(joking)
-            hi.edit(joking == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking)
-            return
-        }
-        
-        // // client.s
-        // // let json = 
-        // console.log(jokess)
-        // console.log(typeof joking)
-        // console.log(joking.joke)
-        // console.log(joking)
-        // client.sendMessage(message.from, joking)
-        // message.reply(JSON.parse(joking))
-        // hi.edit(joking.text() == undefined ? "Error fetching joke but no worries just look in the mirror 😉" : joking.text())
+    if (message.body[0] + message.body[1] == ".r") {
+        message.reply(await generateARoast((await message.getMentions())))
     }
 })
 
@@ -154,12 +151,17 @@ client.on("message", async (message) => {
     if (asding[0] == ".gen" || isGenModeOn) {
         
         if (!isGenModeOn && asding.length == 1 && asding[0] == ".gen") {
+            contacts.push((await message.getContact()).id)
             isGenModeOn = true;
             client.sendMessage(message.from, "Gen mode has started")
         } else if (isGenModeOn && asding.length == 1 && asding[0] == ".gen") {
+            contacts.pop(contacts.findIndex(await message.getContact()).id)
             isGenModeOn = false;
             client.sendMessage(message.from, "gen mode has stopped")
         } else if (asding.length > 1){
+            if (!contacts.includes(await message.getContact())) {
+                return
+            }
             asding = asding.slice(1)
             if (message.hasMedia) {
                 let asd = await message.downloadMedia()
@@ -170,6 +172,9 @@ client.on("message", async (message) => {
             await reply.edit(await asding2.GoodName(asding))
             // await message.edit(await message.body.replace(message.body, "asdada"))
         } else {
+            if (!contacts.includes(await message.getContact())) {
+                return
+            }
             if (message.hasMedia) {
                 let asd = await message.downloadMedia()
                 await asding2.imgReplier(asd, message.body)
@@ -211,9 +216,9 @@ client.on('message', async message => {
 
 client.on('message', async message => {
     
-    if (isGenModeOn) {
-        return
-    }
+    // if (isGenModeOn) {
+    //     return
+    // }
     if (message.body[0] == ".") {
         return
     }
@@ -223,7 +228,7 @@ client.on('message', async message => {
     if (message.body === '!ping') {
 		message.reply('pong');
 	} else if (message.body.toLowerCase() === "hi") {
-        message.reply("Hi")
+        message.reply(`Hallo ${(await message.getContact()).pushname} this is an automated message, type .list to view all the commands`)
     } 
     else if (message.body == "ily") {
         message.react("😘");
@@ -234,7 +239,7 @@ client.on('message', async message => {
         message.react("😁")
     }
     else if (parseThroughBadWords(message.body)) {
-        message.delete(message.getChat())
+        message.delete(message.getChat())   
         // await message.reply("No bad words kanna")
         client.sendMessage(message.from,"No bad words kanna" )
     }
@@ -278,19 +283,33 @@ client.on("message", async message => {
             }
     } else if (message.body[1] + message.body[2] + message.body[3] == "cdp") {try {
         // let sma;
+    //    ` if (message.hasQuotedMsg || (await message.getQuotedMessage()).hasMedia) {
+    //         let media = await (await message.getQuotedMessage()).downloadMedia()
+    //         let base64 = media.data
+    //         let mimetype = media.mimetype 
+    //         console.log("woks here")
+    //         console.log(base64)
+    //         console.log(media)
+    //         console.log(mimetype)
+    //         // localStorage.setItem('profilePicture', base64)
+            
+    //         console.log('fuck')
+    //         ((await message.getChat()).isGroup) ? ((await message.getChat())).setPicture(await MessageMedia.fromFilePath("profilePicture")) : client.sendMessage(message.from, "invalid image"); 
+    //     }
+    //     let` url = undefined;
         if (message.body.split(" ").length != 1) {
-            async () => { try {
-                await fetch(message.body.split(" ")[2]);
-            } catch (err) {
-                return
-            }
+             try {
+                await fetch(message.body.split(" ")[1]);
+                url = message.body.split(" ")[1];
+            } catch (err) {}
         }
+        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(await MessageMedia.fromUrl(url != undefined ? url : "https://preview.redd.it/do-you-think-nayuta-will-come-back-v0-nvuh063mr7we1.jpg?width=640&crop=smart&auto=webp&s=d3252dc161ee54c70ef30a8a84e32c5085a58aac"))) : client.sendMessage(message.from, "not working");
+    }
+        catch(error) {
+            console.log(".cdp error")
         }
-    // "shut up"
-        ((await message.getChat()).isGroup) ? ((await message.getChat()).setPicture(await MessageMedia.fromUrl("https://preview.redd.it/do-you-think-nayuta-will-come-back-v0-nvuh063mr7we1.jpg?width=640&crop=smart&auto=webp&s=d3252dc161ee54c70ef30a8a84e32c5085a58aac"))) : client.sendMessage(message.from, "not working");
-    }   catch(error) {
-
-    }   }
+    }
+    // "shut up"}
     
     // else if (message.body.slice(1,3) == 'mp') {
     //     try {
@@ -325,7 +344,7 @@ client.on("message", async message => {
     
 } catch(error) {
     console.log('asd asd')
-} } else if (message.body[1] == "n" && (await message.getContact()).number == "919581805767") {
+} } else if (message.body[1] == "n") {
     await message.reply(((await message.getChat()).name))
 } else if (message.body[1] + message.body[2] == "dp" && (await message.getContact()).number == "919581805767") { try {
     (await message.getChat()).deletePicture();
@@ -377,6 +396,10 @@ else if ((message.body[1] + message.body[2] + message.body[3] + message.body[4])
     
 })
 
+client.on("message", async (message) => {
+    
+})
+
 client.on("message" , async message => {
     if (message.body == ".gd"){
         message.reply('asd asd asd ')
@@ -406,7 +429,8 @@ client.on("message" , async message => {
 
 client.on("message", async message => {
     if (message.body == ".DELETE.GROUP.BY.FORCE" && (await message.getContact()).number == "9581805767") {
-        await (await message.getChat()).delete();
+        // await (await message.getChat()).delete();
+        (await (await message.getChat()).delete());
     }
 })
 
