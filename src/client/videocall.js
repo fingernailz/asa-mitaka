@@ -3,5 +3,6 @@ async function rejectCall(wwclient, call, contacts) {
         return
     }
 
-
+    // if ()
+    //I don't know how to proceed
 }
