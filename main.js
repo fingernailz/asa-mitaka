@@ -32,6 +32,7 @@ wwclient.on('qr', (qr) => {
 wwclient.initialize();
 
 wwclient.on("message", (message) => {
+
     if (message.body.charAt(0) === "," ) {
         return
     }
