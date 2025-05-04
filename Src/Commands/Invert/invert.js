@@ -1,0 +1,9 @@
+import { Jimp } from "jimp";
+
+async function Invert(url, name){
+    const Image = await Jimp.read(url)
+    Image.invert()
+    await Image.write(`Images/${name}.png`)
+}
+
+export default Invert

@@ -9,7 +9,16 @@ const cmd = require("child_process");
 const { default: fetch } = require('node-fetch');
 const { deprecate } = require('node:util');
 const { machine } = require('node:os');
-const { parseThroughBadWords } = require("./Src/functions/basic.mjs")
+const { parseThroughBadWords } = require("./Src/functions/basic.mjs");
+const { default: Gaussianblur } = require('./Src/Commands/GaussianBlur/GaussianBlur');
+const { default: DitherEffect } = require('./Src/Commands/Dither/dither');
+const { default: MakeACircle } = require('./Src/Commands/Circle/Circle');
+const { default: FadeImage } = require('./Src/Commands/Fade/Fade');
+const { default: Pixelate } = require('./Src/Commands/Pixelate/pixelate');
+const { default: GreyScale } = require('./Src/GreyScale/GayScale');
+const { markAsUncloneable } = require('node:worker_threads');
+const { default: Mask } = require('./Src/Commands/Mask/mask');
+const { default: EyeFish } = require('./Src/Commands/FishEye/FishEye');
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -110,7 +119,7 @@ let isGenModeOn = false;
         
 //         // // client.s
 //         // // let json = 
-//         // console.log(jokess)
+//         // console.log(jokess)   
 //         // console.log(typeof joking)
 //         // console.log(joking.joke)
 //         // console.log(joking)
@@ -124,6 +133,11 @@ let isGenModeOn = false;
 client.on('message', async message => {
     if (message.body[0] + message.body[1] == ".r") {
         message.reply(await generateARoast((await message.getMentions())))
+    } else if (message.body[0] + message.body[1] + message.body[2] == ".gb") {
+        let mentions = await message.getMentions()
+        let profilePic = await mentions[0].getProfilePicUrl()
+        await Mask(profilePic, mentions[0].pushname)
+        message.reply(MessageMedia.fromFilePath(`Images/${mentions[0].pushname}.png`))
     }
 })
 
@@ -373,20 +387,20 @@ catch (error) {
     } else {
         client.sendMessage(message.from, "This is a private chat, the bot cannot leave")
     }
-} else if (message.body[1] + message.body[2] == "mp") {
-let sliced = message.body.split("&")
-console.log(sliced)
-// console.log(sliced)
-if (sliced.length <= 2) {
-    message.reply("Invalid number of arguments try again")
-    return
-}try {
-    let another = sliced.slice(2);
-    client.sendMessage(message.from, new Poll(sliced[1], sliced.slice(2)))
-    } catch (error) {
-        message.reply("Error baby")
-    } 
-}
+    } else if (message.body[1] + message.body[2] == "mp") {
+    let sliced = message.body.split("&")
+    console.log(sliced)
+    // console.log(sliced)
+    if (sliced.length <= 2) {
+        message.reply("Invalid number of arguments try again")
+        return
+    }try {
+        let another = sliced.slice(2);
+        client.sendMessage(message.from, new Poll(sliced[1], sliced.slice(2)))
+        } catch (error) {
+            message.reply("Error baby")
+        } 
+    }
     else  if (message.body = ".mute") {
         (await message.getChat()).mute(message.body.split(" ")[1]) 
     }

@@ -4,6 +4,7 @@
         "axios": "^1.8.4",
         "fabric": "^6.6.4",
         "grok-js": "^3.3.1",
+        "jimp": "^1.6.0",
         "node-fetch": "^3.3.2",
         "qrcode-terminal": "^0.12.0",
         "roastra": "^1.0.4",
