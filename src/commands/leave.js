@@ -1,5 +1,10 @@
 async function leaveChat(wwclient, message) {
-    let chat = message.getChat();
+    let chat = await message.getChat();
+    let contact = await message.getContact();
+
+    if (!contact.isAdmin) {
+        return
+    }
 
     if (!chat.isGroup) {
         return wwclient.sendMessage(message.from, "Not a group chat")
