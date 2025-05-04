@@ -19,6 +19,7 @@ const { default: GreyScale } = require('./Src/GreyScale/GayScale');
 const { markAsUncloneable } = require('node:worker_threads');
 const { default: Mask } = require('./Src/Commands/Mask/mask');
 const { default: EyeFish } = require('./Src/Commands/FishEye/FishEye');
+const { default: FlipImage } = require('./Src/Commands/Flip/Flip');
 
 const client = new Client({
     authStrategy : new LocalAuth({
@@ -136,8 +137,17 @@ client.on('message', async message => {
     } else if (message.body[0] + message.body[1] + message.body[2] == ".gb") {
         let mentions = await message.getMentions()
         let profilePic = await mentions[0].getProfilePicUrl()
-        await Mask(profilePic, mentions[0].pushname)
+        await FlipImage(profilePic, mentions[0].pushname)
         message.reply(MessageMedia.fromFilePath(`Images/${mentions[0].pushname}.png`))
+    } else if (message.body[0] + message.body[1] == ".s") {
+        if (!message.hasMedia) {
+            return
+        }
+
+        const media = await message.downloadMedia()
+        // let participants = (await message.getChat()).json()
+        // let p = 
+        message.reply(media, undefined,{ "sendMediaAsSticker" : true, "stickerAuthor" : "~" + (await message.getContact()).pushname})
     }
 })
 
