@@ -8,7 +8,7 @@ const client = new Client({
         dataPath : 'session'
     })
 });
-// 7908591717   
+
 client.on('ready', () => {
     console.log('Client is ready!');
 });
