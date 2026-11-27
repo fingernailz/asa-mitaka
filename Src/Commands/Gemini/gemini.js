@@ -4,7 +4,7 @@ const { GoogleGenerativeAI, GoogleGenAI } = require("@google/generative-ai")
 
 // import pkg from "whatsapp-web.js";
 
-const genAI = new GoogleGenerativeAI("AIzaSyBy-qAb-7lnkyqLwB-nvo-7LK1bWosz9XE")
+const genAI = new GoogleGenerativeAI("")
 
 const model = genAI.getGenerativeModel(
     {
